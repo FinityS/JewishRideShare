@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "416367225989",
+    "firebase_url": "https://jewish-ride-share.firebaseio.com",
+    "project_id": "jewish-ride-share",
+    "storage_bucket": "jewish-ride-share.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416367225989:android:cb6cb5fb621cb966",
+        "android_client_info": {
+          "package_name": "com.finitydev.jewishrideshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416367225989-sb027p1je2eaaa82sci53vi27h5sejue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.finitydev.jewishrideshare",
+            "certificate_hash": "48e9be9319ecd6449a5a4f1a3f39a70ccd642007"
+          }
+        },
+        {
+          "client_id": "416367225989-b2ejmqs7jggtqpirfso8dnfuiru8m5vf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFqsrvJQ46Vxx4lP8OJupCA-f5twEt2C8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416367225989-b2ejmqs7jggtqpirfso8dnfuiru8m5vf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
