@@ -1,15 +1,16 @@
 package com.finitydev.jewishrideshare;
 
 import android.app.DatePickerDialog;
+import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,7 +22,6 @@ import android.widget.TimePicker;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,10 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 /**
  * A login screen that offers login via email/password.
  */
-public class PostRideActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class PostRideFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
 
-    private static final String TAG = "PostRideActivity";
+    private static final String TAG = "PostRideFragment";
 
 
 
@@ -63,23 +63,43 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_postride);
 
-        startCityTextView = findViewById(R.id.leaving_city);
-        endCityTextView = findViewById(R.id.to_city);
-        startStateTextView = findViewById(R.id.leaving_state);
-        endStateTextView = findViewById(R.id.to_state);
-        spaceSpinner = findViewById(R.id.space);
-        timeButton = findViewById(R.id.time);
-        dateButton = findViewById(R.id.enter_date);
-        postRideButton = findViewById(R.id.post_ride_button);
-        notesTextView = findViewById(R.id.notes);
+
+
+
+
+
+
+
+
+
+        db = FirebaseFirestore.getInstance();
+
+
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle saveInstanceState) {
+        super.onActivityCreated(saveInstanceState);
+
+        View view = getView();
+
+        startCityTextView = view.findViewById(R.id.leaving_city);
+        endCityTextView = view.findViewById(R.id.to_city);
+        startStateTextView = view.findViewById(R.id.leaving_state);
+        endStateTextView = view.findViewById(R.id.to_state);
+        spaceSpinner = view.findViewById(R.id.space);
+        timeButton = view.findViewById(R.id.time);
+        dateButton = view.findViewById(R.id.enter_date);
+        postRideButton = view.findViewById(R.id.post_ride_button);
+        notesTextView = view.findViewById(R.id.notes);
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.space_array, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
@@ -99,10 +119,10 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
         });
 
 
-        genderSpinner = findViewById(R.id.gender);
+        genderSpinner = view.findViewById(R.id.gender);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapterGender = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapterGender = ArrayAdapter.createFromResource(getActivity(),
                 R.array.gender_array, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
@@ -123,11 +143,15 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
 
 
 
+
         timeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 TimePickerFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "timePicker");
+                Bundle args = new Bundle();
+                args.putString("tag", DrawerRootActivity.POST_RIDE);
+                newFragment.setArguments(args);
+                newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
 
             }
         });
@@ -136,7 +160,11 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View view) {
                 DatePickerFragment newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "datePicker");
+                Bundle args = new Bundle();
+                args.putString("tag", DrawerRootActivity.POST_RIDE);
+                newFragment.setArguments(args);
+
+                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
             }
         });
 
@@ -144,7 +172,7 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View view) {
 
-                 //must do validation!!
+                //must do validation!!
                 String startCity = startCityTextView.getText().toString();
                 String endCity = endCityTextView.getText().toString();
                 String startState = startStateTextView.getText().toString();
@@ -185,11 +213,29 @@ public class PostRideActivity extends AppCompatActivity implements DatePickerDia
 
 
 
-        db = FirebaseFirestore.getInstance();
+
+
+
+
+
+
+
+
 
 
 
     }
+
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_postride, container, false);
+    }
+
 
 
     @Override

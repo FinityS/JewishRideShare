@@ -31,10 +31,15 @@ public class TimePickerFragment  extends DialogFragment
             final int hour = c.get(Calendar.HOUR_OF_DAY);
             final int minute = c.get(Calendar.MINUTE);
 
+        String tag = getArguments().getString("tag");
+
+
 
 
         // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener)getActivity(), hour, minute,
+        return new TimePickerDialog(getActivity(),
+                (TimePickerDialog.OnTimeSetListener)getActivity().getSupportFragmentManager().findFragmentByTag(tag),
+                hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }
 
